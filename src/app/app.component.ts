@@ -11,12 +11,13 @@ import {ZXingScannerComponent} from '@zxing/ngx-scanner';
 export class AppComponent {
   title = 'qrcodeReader';
   allowedFormats = [BarcodeFormat.QR_CODE];
-  scannerEnabled = true;
+  scannerEnabled = false;
   desiredDevice: any;
   torch: any;
   @ViewChild('scanner', { static: false })
   scanner: ZXingScannerComponent;
   resultText: string;
+  torchCompatible: Boolean;
 
 
   constructor(
@@ -25,8 +26,12 @@ export class AppComponent {
   }
 
   onTorchCompatible(event: boolean) {
-    console.log('onTorchCompatible');
-    console.log(event);
+    if (!this.torchCompatible) {
+      console.log('onTorchCompatible');
+      console.log(event);
+      this.torchCompatible = event;
+      console.log(this.torchCompatible)
+    }
   }
 
   camerasFoundHandler(event: MediaDeviceInfo[]) {
@@ -57,6 +62,7 @@ export class AppComponent {
   scanCompleteHandler(event: Result) {
     if (event && event.getText() !== this.resultText) {
       this.resultText = event.getText();
+      this.scannerEnabled = false;
     }
   }
 }
