@@ -1,24 +1,10 @@
 <h1 class="h1" *ngIf="resultText">{{resultText}}</h1>
 <h1 class="h1" *ngIf="!resultText">Detection ...</h1>
-<span>torchCompatible : {{torchCompatible}}</span>
+
 <button *ngIf="!scannerEnabled" (click)="scannerEnabled = true">Start</button>
 <button *ngIf="scannerEnabled" (click)="scannerEnabled = false">Stop</button>
 <zxing-scanner #scanner
                [enable]="scannerEnabled"
                [formats]="allowedFormats"
                (scanComplete)="scanCompleteHandler($event)"
-               (torchCompatible)="onTorchCompatible($event)"
 ></zxing-scanner>
-
-
-<!--(camerasFound)="camerasFoundHandler($event)"-->
-<!--[enable]="scannerEnabled"-->
-<!--[(device)]="desiredDevice"-->
-<!--[torch]="torch"-->
-<!--(camerasNotFound)="camerasNotFoundHandler($event)"-->
-<!--(scanSuccess)="scanSuccessHandler($event)"-->
-<!--(scanError)="scanErrorHandler($event)"-->
-<!--(scanFailure)="scanFailureHandler($event)"-->
-<!--(scanComplete)="scanCompleteHandler($event)"-->
-
-

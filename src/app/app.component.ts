@@ -18,45 +18,10 @@ export class AppComponent {
   scanner: ZXingScannerComponent;
   resultText: string;
   torchCompatible: Boolean;
+  cameraList: MediaDeviceInfo[];
 
 
-  constructor(
-    public router: Router,
-  ) {
-  }
-
-  onTorchCompatible(event: boolean) {
-    if (!this.torchCompatible) {
-      console.log('onTorchCompatible');
-      console.log(event);
-      this.torchCompatible = event;
-      console.log(this.torchCompatible)
-    }
-  }
-
-  camerasFoundHandler(event: MediaDeviceInfo[]) {
-    console.log('camerasFoundHandler');
-    console.log(event);
-  }
-
-  camerasNotFoundHandler(event: any) {
-    console.log('camerasNotFoundHandler');
-    console.log(event);
-  }
-
-  scanSuccessHandler(event: string) {
-    console.log('scanSuccessHandler');
-    console.log(event);
-  }
-
-  scanErrorHandler(event: Error) {
-    console.log('scanErrorHandler');
-    console.log(event);
-  }
-
-  scanFailureHandler(event: Exception) {
-    console.log('scanFailureHandler');
-    console.log(event);
+  constructor() {
   }
 
   scanCompleteHandler(event: Result) {
