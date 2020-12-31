@@ -1,10 +1,40 @@
-<h1 class="h1" *ngIf="resultText">{{resultText}}</h1>
-<h1 class="h1" *ngIf="!resultText">Detection ...</h1>
+<div class="">
 
-<button *ngIf="!scannerEnabled" (click)="scannerEnabled = true">Start</button>
-<button *ngIf="scannerEnabled" (click)="scannerEnabled = false">Stop</button>
-<zxing-scanner #scanner
-               [enable]="scannerEnabled"
-               [formats]="allowedFormats"
-               (scanComplete)="scanCompleteHandler($event)"
-></zxing-scanner>
+  <div class="row p-5">
+    <div class="col">
+
+      <h4 class="h4" *ngIf="resultText">
+        <a href="{{resultText}}" target="_blank">{{resultText}}</a>
+      </h4>
+      <h4 class="h4" *ngIf="!resultText">Detection ...</h4>
+
+      <button *ngIf="torchCompatible" (click)="torch = !torch" class="btn btn-black">torch</button>
+
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <zxing-scanner #scanner
+                     [(device)]="desiredDevice"
+                     [torch]="torch"
+                     (torchCompatible)="onTorchCompatible($event)"
+                     [formats]="allowedFormats"
+                     (camerasFound)="camerasFoundHandler($event)"
+                     (scanComplete)="scanCompleteHandler($event)"
+      ></zxing-scanner>
+    </div>
+  </div>
+
+  <div class="row px-2">
+    <div class="col-12">
+      <label for="cameras">Choose a camera :</label>
+
+      <select name="cameras" id="cameras" class="custom-select" (change)="onChange($event.target.value)">
+        <option *ngFor="let camera of cameras" value="{{camera.deviceId}}">{{camera.label}}</option>
+      </select>
+
+    </div>
+  </div>
+
+</div>

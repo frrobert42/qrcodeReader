@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
 import {BarcodeFormat, Exception, Result} from '@zxing/library';
-import {Router} from '@angular/router';
 import {ZXingScannerComponent} from '@zxing/ngx-scanner';
 
 @Component({
@@ -11,7 +10,6 @@ import {ZXingScannerComponent} from '@zxing/ngx-scanner';
 export class AppComponent {
   title = 'qrcodeReader';
   allowedFormats = [BarcodeFormat.QR_CODE];
-  scannerEnabled = false;
   desiredDevice: any;
   torch: any;
   @ViewChild('scanner', { static: false })
@@ -19,6 +17,7 @@ export class AppComponent {
   resultText: string;
   torchCompatible: Boolean;
   cameraList: MediaDeviceInfo[];
+  cameras = [];
 
 
   constructor() {
@@ -27,7 +26,25 @@ export class AppComponent {
   scanCompleteHandler(event: Result) {
     if (event && event.getText() !== this.resultText) {
       this.resultText = event.getText();
-      this.scannerEnabled = false;
     }
+  }
+
+  onTorchCompatible(event: boolean) {
+    console.log('torchCompatible : ' + event);
+    if (event) {
+      this.torchCompatible = true;
+    }
+  }
+
+  camerasFoundHandler(cameras: MediaDeviceInfo[]) {
+    console.table(cameras);
+    if (cameras) {
+      this.cameras = cameras;
+    }
+  }
+
+  onChange(event) {
+    console.log(event);
+    this.desiredDevice = this.cameras.find(camera => camera.deviceId === event)
   }
 }
